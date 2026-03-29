@@ -157,11 +157,13 @@ class CustomWebhookSender:
         
         # 钉钉机器人
         if 'dingtalk' in url_lower or 'oapi.dingtalk.com' in url_lower:
+            # 钉钉消息需添加 "排云破浪" 前缀才能推送
+            dingtalk_content = "排云破浪\n\n" + content
             return {
                 "msgtype": "markdown",
                 "markdown": {
                     "title": "股票分析报告",
-                    "text": content
+                    "text": dingtalk_content
                 }
             }
         
@@ -200,6 +202,9 @@ class CustomWebhookSender:
         import time as _time
 
         # 为 payload 开销预留空间，避免 body 超限
+        # 为钉钉消息添加 "排云破浪" 前缀
+        content = "排云破浪\n\n" + content
+
         budget = max(1000, max_bytes - 1500)
         chunks = chunk_content_by_max_bytes(content, budget)
         if not chunks:

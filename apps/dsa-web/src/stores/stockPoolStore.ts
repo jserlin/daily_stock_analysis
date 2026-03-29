@@ -15,6 +15,8 @@ type FetchHistoryOptions = {
   autoSelectFirst?: boolean;
   reset?: boolean;
   silent?: boolean;
+  startDate?: string | null;
+  endDate?: string | null;
 };
 
 type SubmitAnalysisOptions = {
@@ -49,6 +51,10 @@ export interface StockPoolState {
   isLoadingReport: boolean;
   activeTasks: TaskInfo[];
   markdownDrawerOpen: boolean;
+  // Date filter state
+  historyStartDate: string | null;
+  historyEndDate: string | null;
+  historyTotal: number;
   setQuery: (query: string) => void;
   clearError: () => void;
   clearInlineMessages: () => void;
@@ -63,6 +69,8 @@ export interface StockPoolState {
   deleteSelectedHistory: () => Promise<void>;
   submitAnalysis: (options?: SubmitAnalysisOptions) => Promise<void>;
   setNotify: (notify: boolean) => void;
+  setHistoryDateRange: (startDate: string | null, endDate: string | null) => void;
+  clearHistoryDateFilter: () => void;
   syncTaskCreated: (task: TaskInfo) => void;
   syncTaskUpdated: (task: TaskInfo) => void;
   syncTaskFailed: (task: TaskInfo) => void;
